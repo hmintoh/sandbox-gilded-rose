@@ -87,15 +87,15 @@ describe("Gilded Rose", () => {
     );
   });
 
-  it.skip("should decrease the quality of 'conjured' twice as fast as normal items before expiry", () => {
-    const shop = new Shop([new Item("Conjured items", 8, 30)]);
+  it("should decrease the quality of 'conjured' twice as fast as normal items before expiry", () => {
+    const shop = new Shop([new Item("Conjured Item", 8, 30)]);
     const item = shop.updateQuality();
-    expect(item[0]).toEqual(new Item("Conjured items", 7, 28));
+    expect(item[0]).toEqual(new Item("Conjured Item", 7, 28));
   });
 
-  it.skip("should decrease the quality of 'conjured' twice as fast as normal items after expiry", () => {
-    const shop = new Shop([new Item("Conjured items", 0, 30)]);
+  it("should decrease the quality of 'conjured' twice as fast as normal items after expiry", () => {
+    const shop = new Shop([new Item("Conjured Item", 0, 30)]);
     const item = shop.updateQuality();
-    expect(item[0]).toEqual(new Item("Conjured items", -1, 26));
+    expect(item[0]).toEqual(new Item("Conjured Item", -1, 26));
   });
 });

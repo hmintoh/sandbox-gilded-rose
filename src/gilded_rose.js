@@ -20,7 +20,15 @@ class Shop {
   }
 
   isNormalItem(item) {
-    return !this.isAgedBrie(item) && !this.isBackstagePass(item);
+    return (
+      !this.isAgedBrie(item) &&
+      !this.isBackstagePass(item) &&
+      !this.isConjuredItem(item)
+    );
+  }
+
+  isConjuredItem(item) {
+    return item.name === "Conjured Item";
   }
 
   removeSulfuras() {
@@ -39,6 +47,8 @@ class Shop {
         item.quality < 50 ? item.quality++ : null;
         item.sellIn < 11 ? item.quality++ : null;
         item.sellIn < 6 ? item.quality++ : null;
+      } else if (this.isConjuredItem(item)) {
+        item.quality -= 2;
       } else {
         item.quality--;
       }
@@ -48,9 +58,11 @@ class Shop {
       if (item.sellIn < 0) {
         this.isAgedBrie(item) ? item.quality++ : null;
         this.isBackstagePass(item) ? (item.quality = 0) : null;
-        this.isNormalItem(item) && item.quality > 0
-          ? item.quality--
-          : (item.quality = 0);
+        this.isNormalItem(item) && item.quality > 0 ? item.quality-- : null;
+        this.isConjuredItem(item) && item.quality > 0
+          ? (item.quality -= 2)
+          : null;
+        item.quality < 0 ? (item.quality = 0) : null;
       }
     }
     return this.items;
