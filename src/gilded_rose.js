@@ -20,11 +20,7 @@ class Shop {
   }
 
   isNormalItem(item) {
-    return (
-      !this.isAgedBrie(item) &&
-      !this.isBackstagePass(item) &&
-      !this.isSulfuras(item)
-    );
+    return !this.isAgedBrie(item) && !this.isBackstagePass(item);
   }
 
   removeSulfuras() {
@@ -37,43 +33,30 @@ class Shop {
     let items = this.removeSulfuras();
 
     for (let item of items) {
-      if (!this.isAgedBrie(item) && !this.isBackstagePass(item)) {
-        if (item.quality > 0) {
-          item.quality--;
-        }
+      if (this.isAgedBrie(item)) {
+        item.quality < 50 ? item.quality++ : null;
+      } else if (this.isBackstagePass(item)) {
+        item.quality < 50 ? item.quality++ : null;
+        item.sellIn < 11 ? item.quality++ : null;
+        item.sellIn < 6 ? item.quality++ : null;
       } else {
-        if (item.quality < 50) {
-          item.quality += 1;
-          if (this.isBackstagePass(item)) {
-            if (item.sellIn < 11 && item.quality < 50) {
-              item.quality++;
-            }
-            if (item.sellIn < 6 && item.quality < 50) {
-              item.quality++;
-            }
-          }
-        }
+        item.quality--;
       }
+
       item.sellIn--;
 
       if (item.sellIn < 0) {
-        if (!this.isAgedBrie(item)) {
-          if (!this.isBackstagePass(item) && item.quality > 0) {
-            item.quality--;
-          } else {
-            item.quality = 0;
-          }
-        } else {
-          if (item.quality < 50) {
-            item.quality++;
-          }
-        }
+        this.isAgedBrie(item) ? item.quality++ : null;
+        this.isBackstagePass(item) ? (item.quality = 0) : null;
+        this.isNormalItem(item) && item.quality > 0
+          ? item.quality--
+          : (item.quality = 0);
       }
     }
-
     return this.items;
   }
 }
+
 module.exports = {
   Item,
   Shop
