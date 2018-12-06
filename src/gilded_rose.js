@@ -28,43 +28,43 @@ class Shop {
       if (!this.isAgedBrie(item) && !this.isBackstagePass(item)) {
         if (item.quality > 0) {
           if (!this.isSulfuras(item)) {
-            item.quality = item.quality - 1;
+            item.quality--;
           }
         }
       } else {
         if (item.quality < 50) {
-          item.quality = item.quality + 1;
+          item.quality += 1;
           if (this.isBackstagePass(item)) {
             if (item.sellIn < 11) {
               if (item.quality < 50) {
-                item.quality = item.quality + 1;
+                item.quality++;
               }
             }
             if (item.sellIn < 6) {
               if (item.quality < 50) {
-                item.quality = item.quality + 1;
+                item.quality++;
               }
             }
           }
         }
       }
       if (!this.isSulfuras(item)) {
-        item.sellIn = item.sellIn - 1;
+        item.sellIn--;
       }
       if (item.sellIn < 0) {
         if (!this.isAgedBrie(item)) {
           if (!this.isBackstagePass(item)) {
             if (item.quality > 0) {
               if (!this.isSulfuras(item)) {
-                item.quality = item.quality - 1;
+                item.quality--;
               }
             }
           } else {
-            item.quality = item.quality - item.quality;
+            item.quality = 0;
           }
         } else {
           if (item.quality < 50) {
-            item.quality = item.quality + 1;
+            item.quality++;
           }
         }
       }
